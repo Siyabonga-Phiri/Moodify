@@ -1,0 +1,202 @@
+/* Apply gradient background */
+body {
+    text-align: center;
+    background: linear-gradient(135deg, #ff9a9e, #fecfef);
+    color: white;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content-container {
+    margin-top: 60px; /* Adjust as needed to accommodate navbar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Removed justify-content: center; */
+}
+
+h1 {
+    margin-bottom: 15px; /* Reduced margin-bottom */
+    font-size: 2em; /* Reduced font size (originally 2.5em) */
+    font-weight: bold;
+    color: transparent;
+    background: linear-gradient(135deg, #dc5776, #dc4a95);
+    -webkit-background-clip: text;
+    background-clip: text;
+    display: inline-block;
+}
+
+
+/* ... (Your existing CSS) ... */
+
+.container {
+    position: relative;
+    display: inline-block;
+    border-radius: 12px; /* Rounded corners for the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    overflow: hidden; /* Ensures canvas and video don't overflow rounded corners */
+}
+
+video {
+    width: 450px;
+    height: 320px;
+    display: block; /* Ensures no extra space below video */
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 450px;
+    height: 320px;
+    pointer-events: none;
+    border: 3px solid #ff7797; /* Pink border */
+    border-radius: 12px; /* Rounded corners */
+    box-sizing: border-box; /* Include border within width and height */
+}
+
+/* ... (Your existing CSS) ... */
+#moodTick {
+    position: absolute;
+    font-size: 96px; /* Increased font size (originally 48px) */
+    color: green;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center perfectly */
+    pointer-events: none;
+    display: none; /* Initially hidden */
+}
+/* Ensure the modal appears above the overlay */
+.popup {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
+    z-index: 1000; /* Above the overlay */
+}
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.icon-container {
+    display: flex;
+    gap: 20px;
+    margin: 15px 0;
+}
+.icon-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+}
+.icon-btn i {
+    font-size: 40px;
+    margin-bottom: 5px;
+}
+#musicButton i { color: #1DB954; } /* Green for Spotify */
+#ebookButton i { color: #007bff; } /* Blue for Ebook */
+.close-btn {
+    background-color: #ccc;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #9f2d2d; /* Dark red background */
+    width: 100%;
+    height: 50px; /* Reduce navbar height */
+    padding: 5px 15px; /* Slimmer padding */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Navigation links */
+.nav-menu {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9em; /* Slightly smaller text */
+    padding: 8px 12px;
+}
+
+.navbar a:hover {
+    background-color: #f7c8d3;
+    color: #333;
+}
+
+/* Blurred Background Overlay */
+#blurOverlay {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    backdrop-filter: blur(10px); /* Apply the blur effect */
+    z-index: 999; /* Behind the modal, but above everything else */
+}
+
+#saveMoodButton {
+    background-color: #ff7797;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 1em;
+    margin-top: 10px; /* Keep margin-top at 10px */
+    position: relative; /* Ensure proper stacking context */
+    z-index: 10; /* Ensure button is above other elements */
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#saveMoodButton:hover {
+    background-color: #ff5577;
+    transform: scale(1.05);
+}
+
+#saveMoodButton:active {
+    transform: scale(0.95);
+}
+
+#moodLabel {
+    color: transparent;
+    background: linear-gradient(135deg, #c74966, #df4594);
+    -webkit-background-clip: text; /* For WebKit-based browsers */
+    background-clip: text;        /* Standard property */
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+

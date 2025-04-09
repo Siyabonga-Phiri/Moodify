@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodSync Dashboard</title>
+    <link rel="stylesheet" href="dashboardStyles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="nav-menu">
+            <a href="home.html">Home</a>
+            <a href="contact.html">Contact</a>
+        </ul>
+        <div class="profile-container">
+            <img src="profile-icon.png" alt="" class="profile-icon" id="profileIcon">
+
+            <div class="profile-menu" id="profileMenu">
+                <a href="edit-profile.html">Edit Profile</a>
+                <a href="login.html">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-grid">
+        <div class="tips-container">
+            <h2>Tips personified</h2>
+            <p>Below are your tips based on your mood.</p>
+            <button onclick="fetchTip()">Show Personalized Tip</button>
+        </div>
+
+        <div class="history-section">
+            <h2>Your Mood Cycle</h2>
+            <p>Unpack your mood trends over a peiod of time.</p>
+            <button onclick="window.location.href='/ratings.html'">View History</button>
+        </div>
+
+        <div class="mood-Room-section">
+            <h2>Mood Room</h2>
+            <p>content coming soon.</p>
+            <button onclick="window.location.href='/wellness'">Expand Mood Room</button>
+        </div>
+
+        <div class="wellness-section">
+            <h2>Wellness Content</h2>
+            <p> wellness content coming soon.</p>
+            <button onclick="window.location.href='/wellness'">Explore Wellness</button>
+        </div>
+    </div>
+    
+    <div id="tipModal" class="modal">
+        <div class="modal-content">
+            <h2>Personalized Tip</h2>
+            <p id="modalTipText">Your tip for the day appears here</p>
+            <button class="close-modal" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Profile Menu Toggle - Original code preserved
+        document.addEventListener("DOMContentLoaded", function () {
+            const profileIcon = document.getElementById("profileIcon");
+            const profileMenu = document.getElementById("profileMenu");
+
+            profileIcon.addEventListener("click", function (event) {
+                event.stopPropagation();
+                profileMenu.classList.toggle("show");
+            });
+
+            document.addEventListener("click", function (event) {
+                if (!profileMenu.contains(event.target) && event.target !== profileIcon) {
+                    profileMenu.classList.remove("show");
+                }
+            });
+        });
+
+        // Fixed fetchTip function with error handling
+        async function fetchTip() {
+            try {
+                const response = await fetch('/api/tips', {  // Changed to proper endpoint
+                    method: 'GET',  // Changed from POST to GET
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                const modalText = document.getElementById("modalTipText");
+                modalText.innerHTML = `
+                    <p><strong>Tip:</strong> ${data.tip_text}</p>
+                    <p><strong>Suggestion:</strong> ${data.activity_suggestion || "No suggestion available."}</p>
+                `;
+
+                const modal = document.getElementById("tipModal");
+                modal.style.display = "block";
+                document.body.classList.add("modal-active");
+            } catch (error) {
+                console.error("Error fetching tip:", error);
+                alert("Failed to load tip. Please try again later.");
+            }
+        }
+
+        // Original closeModal function preserved
+        function closeModal() {
+            const modal = document.getElementById("tipModal");
+            modal.style.display = "none";
+            document.body.classList.remove("modal-active"); 
+        }
+    </script>
+</body>
+</html>
